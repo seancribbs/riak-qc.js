@@ -69,4 +69,4 @@ declare("Riak.reduceSort",
             }
         });
 
-Riak.QC.verify();
+quit(Riak.QC.verify());

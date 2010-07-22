@@ -28,6 +28,7 @@ SpidermonkeyListener.prototype.invalid = function (arg) {
 }
 SpidermonkeyListener.prototype.failure = function (arg) {
     //print message in red
+    this.hadFailures = true;
     print('\033[31m' + this.stringify(arg) + '\033[0m');
 }
 
@@ -55,7 +56,9 @@ Riak.QC = {
     },
     verify: function(){
         var _config = arguments[0] || config;
-        runAllProps(_config, new SpidermonkeyListener());
+        var listener = new SpidermonkeyListener();
+        runAllProps(_config, listener);
+        return listener.hadFailures ? 1 : 0;
     },
     genNotFound: {
         arb: function(){
