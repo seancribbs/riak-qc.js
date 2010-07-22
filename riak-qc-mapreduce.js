@@ -10,7 +10,7 @@ var SpidermonkeyListener = function(maxCollected){
 SpidermonkeyListener.prototype = new ConsoleListener();
 SpidermonkeyListener.prototype.stringify = function(obj){
     var toStrClasses = ["String", "Fail", "Pass", "Invalid", "Stats"];
-    var className = Riak.getClassName(obj);
+    var className = Riak.Util.getClassName(obj);
     if(toStrClasses.indexOf(className) != -1)
         return obj.toString();
     else
@@ -41,7 +41,7 @@ var config = new Config(100,100,5);
 
 Riak.QC = {
     isSaneMap: function(result){
-        return Riak.getClassName(result) == "Array";
+        return Riak.Util.getClassName(result) == "Array";
     },
     isChainableMap: function(result){
         return this.isSaneMap(result) && result.every(function(v){
@@ -52,7 +52,7 @@ Riak.QC = {
                                                     });  
     },
     isSaneReduce: function(result){
-        return Riak.getClassName(result) == "Array";
+        return Riak.Util.getClassName(result) == "Array";
     },
     verify: function(){
         var _config = arguments[0] || config;

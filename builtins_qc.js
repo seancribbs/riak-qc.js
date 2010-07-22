@@ -1,17 +1,17 @@
 load("riak-qc-mapreduce.js");
 
-declare("Riak.getClassName",
+declare("Riak.Util.getClassName",
         [arbArray(arbInt),arbDate],
         function(c,arr,date){
-            c.assert(Riak.getClassName(arr) == "Array");
-            c.assert(Riak.getClassName(date) == "Date");
+            c.assert(Riak.Util.getClassName(arr) == "Array");
+            c.assert(Riak.Util.getClassName(date) == "Date");
         });
 
-declare("Riak.filterNotFound",
+declare("Riak.Util.filterNotFound",
         [arbArray(arbChoose(Riak.QC.genNotFound, arbInt))],
         function(c,values){
             // The "every" check is abstracted into Riak.QC.filtersNotFounds but is explicit here for clarity
-            c.assert(Riak.filterNotFound(values).every(function(v){ return v.not_found ? false : true; }));
+            c.assert(Riak.Util.filterNotFound(values).every(function(v){ return v.not_found ? false : true; }));
         });
 
 declare("Riak.reduceSum",
@@ -21,7 +21,7 @@ declare("Riak.reduceSum",
             c.assert(Riak.QC.isSaneReduce(result));
             c.assert(Riak.QC.filtersNotFounds(result));
             c.assert(result.length == 1);
-            var validValues = Riak.filterNotFound(values);
+            var validValues = Riak.Util.filterNotFound(values);
             var expected = 0;
             for(var i = 0; i < validValues.length; i++)
                 expected += validValues[i];
