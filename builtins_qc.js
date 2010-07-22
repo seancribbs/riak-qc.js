@@ -45,4 +45,28 @@ declare("Riak.reduceMin",
                c.assert(values.every(function(v){ return result[0] <= v;}));           
        });
 
+declare("Riak.reduceNumericSort",
+        [arbArray(arbInt)],
+        function(c, values){
+            var result = Riak.reduceNumericSort(values);
+            c.assert(Riak.QC.isSaneReduce(result));
+            c.assert(result.length == values.length);
+            if(values.length > 0) {
+                for(var i = 0; i < result.length - 1; i++)
+                    c.assert(result[i] <= result[i+1]);
+            }
+        });
+
+declare("Riak.reduceSort",
+        [arbArray(arbString)],
+        function(c, values){
+            var result = Riak.reduceSort(values);
+            c.assert(Riak.QC.isSaneReduce(result));
+            c.assert(result.length == values.length);
+            if(values.length > 0) {
+                for(var i = 0; i < result.length - 1; i++)
+                    c.assert(result[i] <= result[i+1]);
+            }
+        });
+
 Riak.QC.verify();
