@@ -1,0 +1,45 @@
+h1. riak-qc.js: Testing Riak Map-Reduce functions in Javascript
+
+
+The goal of this project is to build a simple but sane testing harness for Javascript functions that participate in Riak Map-Reduce queries.
+
+h2. Dependencies
+
+
+You must have Spidermonkey 1.8 or later installed (Riak currently uses 1.8rc1). This is easy to install on Mac OS/X with homebrew:
+
+<pre>$ brew install spidermonkey
+</pre>
+
+h2. Usage
+
+
+To create your own set of QC properties for your functions, use this template:
+
+<pre>load("riak-qc-mapreduce.js");
+load("your-functions.js");
+
+// A property
+describe("Property for my function",  // A descriptive string
+         [gen1, gen2, gen3],          // Generators for use in your property
+         function(c, g1, g2, g3){
+           // invoke your function here, do some assertions on the result
+           c.assert(true);
+         });
+
+Riak.QC.verify(); // Invokes the test runner</pre>
+
+Some useful helper functions for assertions and generation are of the Riak.QC object. 
+
+To run more or fewer test cases, pass a new @Config@ object to @Riak.QC.verify()@;
+
+h2. TODO
+
+* Document helper functions
+* Generators
+** Riak objects - simple, with siblings, different formats
+* Support invocation of Spidermonkey through "erlang_js":http://bitbucket.org/basho/erlang_js.
+
+h2. Credits
+
+@qc.js@ comes from "http://bitbucket.org/darrint/qc.js/":http://bitbucket.org/darrint/qc.js/
