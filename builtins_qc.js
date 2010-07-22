@@ -21,29 +21,34 @@ declare("Riak.reduceSum",
             c.assert(Riak.QC.isSaneReduce(result));
             c.assert(Riak.QC.filtersNotFounds(result));
             c.assert(result.length == 1);
+            var validValues = Riak.filterNotFound(values);
+            var expected = 0;
+            for(var i = 0; i < validValues.length; i++)
+                expected += validValues[i];
+            c.assert(result[0] === expected);
             if(values.length == 0)
-                c.assert(result[0] == 0);
+                c.assert(result[0] === 0);
         });
 
 declare("Riak.reduceMax",
-       [arbArray(arbInt)],
-       function(c, values){
-           var result = Riak.reduceMax(values);
-           c.assert(Riak.QC.isSaneReduce(result));
-           c.assert(values.length == 0 || result.length == 1);
-           if(values.length > 0)
-               c.assert(values.every(function(v){ return result[0] >= v;}));           
-       });
+        [arbArray(arbInt)],
+        function(c, values){
+            var result = Riak.reduceMax(values);
+            c.assert(Riak.QC.isSaneReduce(result));
+            c.assert(values.length == 0 || result.length == 1);
+            if(values.length > 0)
+                c.assert(values.every(function(v){ return result[0] >= v;}));
+        });
 
 declare("Riak.reduceMin",
-       [arbArray(arbInt)],
-       function(c, values){
-           var result = Riak.reduceMin(values);
-           c.assert(Riak.QC.isSaneReduce(result));
-           c.assert(values.length == 0 || result.length == 1);
-           if(values.length > 0)
-               c.assert(values.every(function(v){ return result[0] <= v;}));           
-       });
+        [arbArray(arbInt)],
+        function(c, values){
+            var result = Riak.reduceMin(values);
+            c.assert(Riak.QC.isSaneReduce(result));
+            c.assert(values.length == 0 || result.length == 1);
+            if(values.length > 0)
+                c.assert(values.every(function(v){ return result[0] <= v;}));
+        });
 
 declare("Riak.reduceNumericSort",
         [arbArray(arbInt)],
