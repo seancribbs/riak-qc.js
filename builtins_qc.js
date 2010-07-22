@@ -14,6 +14,18 @@ declare("Riak.Util.filterNotFound",
             c.assert(Riak.Util.filterNotFound(values).every(function(v){ return v.not_found ? false : true; }));
         });
 
+declare("Riak.Util.numericSorter",
+        [arbFloatUnit, arbFloatUnit],
+        function(c, a, b){
+            var actual = Riak.Util.numericSorter(a,b);
+            if(a < b)
+                c.assert(actual < 0);
+            if(a > b)
+                c.assert(actual > 0);
+            if(a === b)
+                c.assert(actual === 0);
+        });
+
 declare("Riak.reduceSum",
         [arbArray(arbChoose(Riak.QC.genNotFound,arbInt))],
         function(c, values){

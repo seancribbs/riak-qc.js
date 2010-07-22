@@ -100,5 +100,5 @@ Riak.Util = {
     },
     numericSorter: function(first, second) {
         return first - second;
-    }    
+    }
 };
