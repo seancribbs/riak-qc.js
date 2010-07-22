@@ -21,12 +21,8 @@ var Riak = {
     },
     filterNotFound: function(values) {
         return values.filter(function(value, index, data) {
-                                 if (typeof value === 'object') {
-                                     return value['not_found'] === undefined;
-                                 }
-                                 else {
-                                     return true;
-                                 } });
+                                 return value ? !value.not_found : true;
+                             });
     },
     mapValues: function(value, keyData, arg) {
         if (value["not_found"]) {
