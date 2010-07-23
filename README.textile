@@ -29,9 +29,9 @@ describe("Property for my function",  // A descriptive string
 
 Riak.QC.verify(); // Invokes the test runner</pre>
 
-Some useful helper functions for assertions and generation are of the Riak.QC object. 
+Some useful helper functions for assertions and generation are of the Riak.QC object.
 
-To run more or fewer test cases, pass a new @Config@ object to @Riak.QC.verify()@;
+To run more or fewer test cases, pass a new @Config@ object to @Riak.QC.verify()@. To use as part of an automated test suite, pass the result of @Riak.QC.verify()@ as the first argument to @quit()@, which will set the exit code non-zero on failure.
 
 h2. TODO
 
